@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.number.IsCloseTo.closeTo;
 
 public class DistanceTest {
     @Test
@@ -29,6 +28,6 @@ public class DistanceTest {
     public void should_calculate_distance_charge_properly() {
         assertThat(new Distance(1).price(), is(6d));
         assertThat(new Distance(3).price(), is(6.8));
-        assertThat(new Distance(10).price(), closeTo(13.2, 0.0001));
+        assertThat((float) new Distance(10).price(), is(13.2f));
     }
 }
