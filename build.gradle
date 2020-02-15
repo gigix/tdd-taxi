@@ -1,0 +1,82 @@
+plugins {
+    id 'java-library'
+    id 'idea'
+    id 'java'
+    id 'jacoco'
+    id 'checkstyle'
+}
+
+group = 'com.github.wenhao'
+version = '1.0.0-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+idea {
+    project {
+        vcs = 'Git'
+    }
+    module {
+        jdkName = '1.8'
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+repositories {
+    maven {
+        url 'https://maven.aliyun.com/repository/central'
+    }
+    jcenter()
+}
+
+dependencies {
+    testImplementation "junit:junit:4.13"
+    testImplementation 'org.hamcrest:hamcrest:2.2'
+}
+
+checkstyle {
+    ignoreFailures = false
+    configFile file("$project.rootDir/config/checkstyle/checkstyle.xml")
+    sourceSets = [sourceSets.main]
+
+    checkstyleMain {
+        source = 'src/main/java'
+    }
+}
+jacocoTestReport {
+    reports {
+        html.enabled = true
+        xml.enabled = false
+        csv.enabled = false
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            element = 'CLASS'
+
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.8
+            }
+            limit {
+                counter = 'BRANCH'
+                value = 'COVEREDRATIO'
+                minimum = 0.8
+            }
+            limit {
+                counter = 'METHOD'
+                value = 'COVEREDRATIO'
+                minimum = 0.8
+            }
+            limit {
+                counter = 'CLASS'
+                value = 'COVEREDRATIO'
+                minimum = 0.8
+            }
+        }
+    }
+}
+check.dependsOn jacocoTestCoverageVerification
+jacocoTestCoverageVerification.dependsOn jacocoTestReport
