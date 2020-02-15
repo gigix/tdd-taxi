@@ -9,7 +9,7 @@ public class AppRunner {
           并将结果保存到receipt变量中。
          */
         String testDataFile = args[0];
-        String receipt = new Receipt(testDataFile).bill();
+        String receipt = new Receipt(testDataFile).bill() + "\n";
         System.out.println(receipt);
     }
 }
